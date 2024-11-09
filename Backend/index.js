@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/files", express.static("files"))
 
 const PORT = process.env.PORT || 4000;
-const URI = process.env.MongoDbURI;
+const URI = process.env.MONGODB_URI;
 
 try {
   await mongoose.connect(URI, {
