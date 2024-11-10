@@ -9,7 +9,7 @@ const ReadBook = ({ bookId }) => {
   useEffect(() => {
     const fetchBookPDF = async () => {
       try {
-        const res = await axios.get(`http://localhost:4001/dpdf/${bookId}/pdf`);
+        const res = await axios.get(`https://again-bookstore.vercel.app/dpdf/${bookId}/pdf`);
         setPdfPath(res.data.pdfPath); 
       } catch (err) {
         console.error('Error fetching books:', err); 
