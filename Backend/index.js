@@ -69,34 +69,34 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/book", upload.single("file"), async (req, res) => {
-  try{
-    console.log(req.file);
-    const id = req.body.id;
-    const title = req.body.title;
-    const fileName = req.file.filename;
-    const name = req.body.name;
-    const author = req.body.author;
-    const price = req.body.price;
-    const image = req.body.image;
-    const category = req.body.category;
-    res.status(200).send("File uploaded successfully.");
+  try {
+    console.log("File details:", req.file);
+    console.log("Request body:", req.body); // Log the entire request body
     
-    await Book.create({
-      id: id,
-      name:name,
-      author: author,
-      title: title,
-      price: price,
-      image: image,
-      category: category,
-      pdf: fileName
+    const { id, title, name, author, price, image, category } = req.body;
+    const fileName = req.file ? req.file.filename : null;
+
+    if (!fileName) {
+      return res.status(400).send("File upload failed.");
+    }
+
+    const book = await Book.create({
+      id,
+      name,
+      author,
+      title,
+      price,
+      image,
+      category,
+      pdf: fileName,
     });
-  } catch(error){
-    console.log(error);
-    return res.status(500).send("Error uploading file");
+
+    res.status(200).send("File uploaded successfully.");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error uploading file");
   }
 });
- 
 
 app.post("/deleteBook", async (req, res) => {
   try {
@@ -119,8 +119,8 @@ app.post("/deleteBook", async (req, res) => {
   }
 });
 
-app.use("/book/", bookroute);
-app.use("/user/", userroute);
+app.use("/book", bookroute); 
+app.use("/user", userroute); 
 
 app.get("/", async (req, res) => {
   res.send("Hello");
