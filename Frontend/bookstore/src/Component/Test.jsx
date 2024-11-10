@@ -9,7 +9,7 @@ const PdfViewer = () => {
 
   useEffect(() => {
     if (pdfPath) {
-      setPdfFile(`http://localhost:4001/files/${decodeURIComponent(pdfPath)}`); // Construct the PDF URL
+      setPdfFile(`https://again-bookstore.vercel.app/files/${decodeURIComponent(pdfPath)}`); // Construct the PDF URL
     }
   }, [pdfPath]);
 
