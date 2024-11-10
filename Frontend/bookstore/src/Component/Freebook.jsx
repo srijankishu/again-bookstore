@@ -28,9 +28,9 @@ const Freebook = () => {
   dots: true,
   infinite: false,
   speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 3,
-  initialSlide: 0, // This ensures the first card is visible
+  slidesToShow: 1,  // Show one card on mobile screens
+  slidesToScroll: 1,  // Scroll one card at a time
+  initialSlide: 0,
   responsive: [
     {
       breakpoint: 1024,
@@ -46,19 +46,20 @@ const Freebook = () => {
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
-        initialSlide: 0  // Ensure initial card visibility on smaller screens
+        initialSlide: 0
       }
     },
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 1,  // Show only one card at a time on mobile
         slidesToScroll: 1,
-        initialSlide: 0 // For mobile, ensure the first card is displayed
+        initialSlide: 0
       }
     }
   ]
 };
+
     const filterData = list.filter((data) => data.category === "Free");
   return (
     <>
