@@ -1,81 +1,85 @@
 import React, { useEffect, useState } from 'react';
-import Slider from 'react-slick';
-import axios from 'axios';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import Cards from './Cards';
+import list from "../Component/List/list.json";
+import './Css/Style.css';
+import axios from 'axios';
 
 const Freebook = () => {
-  const [book, setBook] = useState([]);
-
-  useEffect(() => {
+  const[book,setbook] = useState([]);
+  useEffect(() =>{
     const getBook = async () => {
-      try {
-        const res = await axios.get('http://localhost:4001/book');
-        const xx = res.data.filter((data) => data.category === "Free");
-        setBook(xx);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getBook();
-  }, []);
+    try{
+      const res = await axios.get('http://localhost:4001/book');
+     
+      const xx = res.data.filter((data) => data.category === "Free");
+      console.log(xx);
+      setbook(xx);
 
+    }catch(error){
+       console.log(error);
+    }
+  };
+  getBook();
+  },[])
   var settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 1,  // Default for mobile
-    slidesToScroll: 1,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     initialSlide: 0,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,  // Show 3 cards on large screens
+          slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: true
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,  // Show 2 cards on tablets
+          slidesToShow: 2,
           slidesToScroll: 2,
+          initialSlide: 0  // Ensure initial card visibility on smaller screens
         }
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,  // Show 1 card on mobile
+          slidesToShow: 1,
           slidesToScroll: 1,
+          initialSlide: 0 // For mobile, ensure the first card is displayed
         }
       }
     ]
   };
-
+    const filterData = list.filter((data) => data.category === "Free");
   return (
-    <div className='max-w-screen-2xl container mx-auto'>
-      <h1 className='mt-5 font-semibold text-xl pb-2'>Free offered courses</h1>
+    <>
+    <div className='max-w-screen-2xl container mx-auto md:px-20 px-4'>
+      <div>
+      <h1 className='mt-5 font-semibold text-xl pb-2 dark:text-white text-black'>Free offered courses</h1>
+      <p className='text-black dark:text-white p-2'>Access a wide range of books at no cost. Your learning adventure awaits! </p>
+      </div>
+      <div>
       <Slider {...settings}>
-        {book.map((item) => (
-          <div key={item.id} className="card bg-base-100 shadow-xl">
-            <figure>
-              <img src={item.image} alt="Book Cover" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{item.name}</h2>
-              <p>Genre: {item.title}</p>
-              <p>Author: {item.author}</p>
-              <div className="card-actions justify-between">
-                <div>${item.price}</div>
-              </div>
-            </div>
-          </div>
+        {book.map((item) =>(
+          <Cards item = {item} key = {item.id}/>
         ))}
       </Slider>
+      </div>
+       
     </div>
-  );
-};
+    
+    </>
+    
+  )
+}
 
 export default Freebook;
