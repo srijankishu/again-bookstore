@@ -31,7 +31,7 @@ const ReadBook = ({ bookId }) => {
         <p>{error}</p>
       ) : (
         <iframe 
-          src={`http://localhost:4001${pdfPath}`} 
+          src={`https://again-bookstore.vercel.app${pdfPath}`} 
           width="100%" 
           height="100%"  // Ensures full height
           className="border-none" // Removes iframe border
